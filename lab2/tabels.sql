@@ -1,0 +1,68 @@
+CREATE TABLE movies (
+	id SERIAL,
+	title TEXT NOT NULL,
+	year INTEGER NOT NULL,
+	length INTEGER NOT NULL,
+	outline TEXT NOT NULL,
+	companyID INTEGER NOT NULL,
+	FOREIGN KEY (companyID) REFERENCES companies(id) ON DELETE CASCADE,
+	PRIMARY KEY (id)
+);
+CREATE TABLE companies (
+	id SERIAL,
+	name TEXT NOT NULL,
+	address TEXT NOT NULL,
+	PRIMARY KEY (id)
+);
+
+CREATE TABLE people (
+	id SERIAL,
+	name TEXT NOT NULL,
+	birth_day TIMESTAMP NOT NULL,
+	PRIMARY KEY (id)
+);
+
+CREATE TABLE genres (
+	id SERIAL,
+	name TEXT NOT NULL,
+	PRIMARY KEY (id)
+);
+
+CREATE TABLE quotes (
+	id SERIAL,
+	content TEXT NOT NULL,
+	personID INTEGER NOT NULL,
+	movieID INTEGER NOT NULL,
+
+	FOREIGN KEY (movieID) REFERENCES movies(id) ON DELETE CASCADE,
+	FOREIGN KEY (personID) REFERENCES persons(id),
+	PRIMARY KEY (id)
+);
+
+CREATE TABLE directed (
+	movieID INTEGER NOT NULL,
+	personID INTEGER NOT NULL,
+
+	FOREIGN KEY (movieID) REFERENCES movies(id) ON DELETE CASCADE,
+	FOREIGN KEY (personID) REFERENCES persons(id) ON DELETE CASCADE,
+	PRIMARY KEY (movieID, personID)
+);
+
+CREATE TABLE movie_genres (
+	movieID INTEGER NOT NULL,
+	genreID INTEGER NOT NULL,
+
+	FOREIGN KEY (movieID) REFERENCES movies(id) ON DELETE CASCADE,
+	FOREIGN KEY (genreID) REFERENCES genres(id) ON DELETE CASCADE,
+	PRIMARY KEY (movieID, genreID)
+);
+
+CREATE TABLE actors (
+	movieID INTEGER NOT NULL,
+	personID INTEGER NOT NULL,
+	role TEXT NOT NULL,
+
+	FOREIGN KEY (movieID) REFERENCES movies(id) ON DELETE CASCADE,
+	FOREIGN KEY (personID) REFERENCES persons(id) ON DELETE CASCADE,
+	PRIMARY KEY (movieID, personID)
+);
