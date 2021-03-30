@@ -1,0 +1,11 @@
+db.Restaurants.find()
+
+db.Restaurants.find(undefined,{grades: 0,address: 0})
+
+db.Restaurants.find({borough: 'Bronx'}).limit(5)
+
+db.Restaurants.find({$or: [{ $and: [ { cuisine: { $not:RegExp('American') } }, { cuisine: { $not: RegExp('Chinees') } } ]},{name: { $regex: '^Wil' }}]},{grades: 0,address: 0})
+
+db.Restaurants.find({name: {$regex: 'mon'}},{'address.street': 0,'address.building': 0,'address.zipcode': 0,grades: 0,restaurant_id: 0})
+
+db.Restaurants.find({$or: [{ borough: 'Staten Island'},{ borough: 'Queens'},{ borough: 'Bronx'},{ borough: 'Brooklyn'}]},{grades: 0,address: 0})
