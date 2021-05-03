@@ -1,0 +1,17 @@
+SELECT DISTINCT film.title FROM film
+INNER JOIN film_category ON film.film_id = film_category.film_id
+INNER JOIN category ON film_category.category_id = category.category_id
+LEFT JOIN inventory ON film.film_id = inventory.film_id
+LEFT JOIN rental ON inventory.inventory_id = rental.inventory_id
+WHERE (film.rating = 'PG-13' OR film.rating = 'R') 
+AND (category.name = 'Sci-Fi' OR category.name = 'Horror')
+AND rental.rental_date IS NULL;
+
+
+SELECT store.store_id, SUM(payment.amount) AS sums
+FROM store
+INNER JOIN staff ON store.store_id = staff.store_id
+INNER JOIN payment ON payment.staff_id = staff.staff_id
+WHERE payment.payment_date >= (SELECT MAX(payment_date) FROM payment) - INTERVAL '30 days' 
+GROUP BY store.store_id
+ORDER BY sums DESC;
