@@ -1,0 +1,57 @@
+Exercise 1 Migration from SQL 
+
+part 1
+
+ZADD customers 001 "Jane Doe"
+ZADD customers 002 "John Doe" 003 "Jane Smith"
+ZADD customers 004 "John Smith" 005 "Jane Jones" 006 "John Jones"
+
+part 2
+
+MULTI
+HMSET order:1001 cust_numb 002 order_date 10/10/09 order_total 250.85
+ZADD order_list 1001 order:1001
+ZADD order_price 250.85 order:1001
+EXEC
+
+MULTI
+HMSET order:1002 cust_numb 002 order_date 2/21/10 order_total 125.89
+ZADD order_list 1002 order:1002
+ZADD order_price 125.89 order:1002
+EXEC
+
+MULTI
+HMSET order:1003 cust_numb 003 order_date 11/15/09 order_total 1567.99
+ZADD order_list 1003 order:1003
+ZADD order_price 1567.99 order:1003
+EXEC
+
+MULTI
+HMSET order:1004 cust_numb 004 order_date 11/22/09 order_total 180.92
+ZADD order_list 1004 order:1004
+ZADD order_price 180.92 order:1004
+EXEC
+
+MULTI
+HMSET order:1005 cust_numb 004 order_date 12/15/09 order_total 565.00
+ZADD order_list 1005 order:1005
+ZADD order_price 565.00 order:1005
+EXEC
+
+MULTI
+HMSET order:1006 cust_numb 006 order_date 11/22/09 order_total 25.00
+ZADD order_list 1006 order:1006
+ZADD order_price 25.00 order:1006
+EXEC
+
+MULTI
+HMSET order:1007 cust_numb 006 order_date 10/8/09 order_total 85.00
+ZADD order_list 1007 order:1007
+ZADD order_price 85.00 order:1007
+EXEC
+
+MULTI
+HMSET order:1008 cust_numb 006 order_date 12/29/09 order_total 109.12
+ZADD order_list 1008 order:1008
+ZADD order_price 109.12 order:1008
+EXEC
