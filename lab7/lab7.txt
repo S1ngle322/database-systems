@@ -1,0 +1,15 @@
+CREATE OR REPLACE FUNCTION retrieve_customer(int, int)
+RETURNS SETOF customer as 
+$$ 
+BEGIN 
+IF $1<0 THEN RAISE EXCEPTION 'negative index of start id'; END IF;
+IF $2<0 THEN RAISE EXCEPTION 'negative index of end id'; END IF;
+IF $1>600 THEN RAISE EXCEPTION 'start index out-of-bound'; END IF;
+IF $2>600 THEN RAISE EXCEPTION 'end index out-of-bound'; END IF;
+IF $2<$1 THEN RAISE EXCEPTION 'end is less than start'; END IF;
+RETURN QUERY
+SELECT * FROM customer 
+WHERE customer.address_id <= $2 AND customer.address_id >= $1
+ORDER BY address_id;
+END;
+$$ LANGUAGE plpgsql;
